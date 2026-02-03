@@ -108,14 +108,13 @@
         .pack-icon {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, #3b82f6, #06b6d4);
             border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
             margin: 0 auto 1.5rem;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15)
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+            object-fit: contain;
+            display: block;
+            background: rgba(25, 25, 35, 0.6);
+            image-rendering: pixelated;
         }
 
         h1 {
@@ -438,7 +437,7 @@
         <div class="nav-links"><a href="https://github.com/CountXD/square-music-discs" target="_blank">GitHub</a></div>
     </nav>
     <header>
-        <div class="pack-icon">🔳</div>
+        <img src="assets/pack.png" alt="Square Music Discs" class="pack-icon">
         <h1>Square Music Discs</h1>
         <p class="description">Give your Minecraft music discs a unique square shape! Reimagines the classic circular
             discs as modern square album covers.</p>
