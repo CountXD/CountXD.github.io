@@ -387,7 +387,7 @@
     <script>
         const REPO = 'enchant-icons';
         const USER = 'CountXD';
-        const EXCLUDE_FILES = ['README.md', 'readme.md', '.gitattributes', 'LICENSE', 'license'];
+        const EXCLUDE_FILES = ['README.md', 'readme.md', '.gitattributes', 'LICENSE', 'license', '.gitignore'];
 
         function sortVersions(branches) {
             return branches.sort((a, b) => {
@@ -399,41 +399,53 @@
             });
         }
 
+        // Recursively get all files from GitHub tree
+        async function getTreeFiles(branch) {
+            const treeRes = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/trees/${branch}?recursive=1`);
+            if (!treeRes.ok) throw new Error('Failed to get tree');
+            const tree = await treeRes.json();
+            return tree.tree.filter(item => item.type === 'blob');
+        }
+
+        // Fetch file content from raw.githubusercontent.com
+        async function fetchFileContent(branch, path) {
+            const res = await fetch(`https://raw.githubusercontent.com/${USER}/${REPO}/${branch}/${path}`);
+            if (!res.ok) throw new Error(`Failed to fetch ${path}`);
+            return await res.blob();
+        }
+
         async function downloadPack(branch, card) {
             card.classList.add('downloading');
-            card.innerHTML = `<div class="spinner"></div><div class="version-name">${branch === 'latest' ? '⭐ Latest' : branch}</div><div class="download-label">Preparing...</div>`;
+            const isLatest = branch === 'latest';
+            card.innerHTML = `<div class="spinner"></div><div class="version-name">${isLatest ? '⭐ Latest' : branch}</div><div class="download-label">Preparing...</div>`;
 
             try {
-                // Fetch ZIP from GitHub
-                const zipUrl = `https://api.github.com/repos/${USER}/${REPO}/zipball/${branch}`;
-                const response = await fetch(zipUrl);
-                if (!response.ok) throw new Error('Failed to fetch');
+                // Get file list from GitHub tree API
+                const files = await getTreeFiles(branch);
+                const zip = new JSZip();
 
-                const blob = await response.blob();
-                const zip = await JSZip.loadAsync(blob);
+                // Filter and fetch files
+                const validFiles = files.filter(f => {
+                    const filename = f.path.split('/').pop();
+                    return !EXCLUDE_FILES.includes(filename);
+                });
 
-                // Create new ZIP with proper structure
-                const newZip = new JSZip();
-                const rootFolder = Object.keys(zip.files)[0].split('/')[0] + '/';
+                card.querySelector('.download-label').textContent = `Downloading ${validFiles.length} files...`;
 
-                for (const [path, file] of Object.entries(zip.files)) {
-                    if (file.dir) continue;
-
-                    // Remove root folder prefix
-                    let newPath = path.startsWith(rootFolder) ? path.slice(rootFolder.length) : path;
-
-                    // Skip excluded files
-                    const filename = newPath.split('/').pop();
-                    if (EXCLUDE_FILES.includes(filename)) continue;
-                    if (!newPath) continue;
-
-                    const content = await file.async('blob');
-                    newZip.file(newPath, content);
+                // Fetch all files in parallel (batched to avoid rate limits)
+                const batchSize = 10;
+                for (let i = 0; i < validFiles.length; i += batchSize) {
+                    const batch = validFiles.slice(i, i + batchSize);
+                    const contents = await Promise.all(
+                        batch.map(f => fetchFileContent(branch, f.path))
+                    );
+                    batch.forEach((f, idx) => zip.file(f.path, contents[idx]));
                 }
 
                 // Generate and download
-                const finalBlob = await newZip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
-                const url = URL.createObjectURL(finalBlob);
+                card.querySelector('.download-label').textContent = 'Creating ZIP...';
+                const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+                const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = `${REPO}-${branch}.zip`;
@@ -449,7 +461,6 @@
 
             // Restore card
             card.classList.remove('downloading');
-            const isLatest = branch === 'latest';
             card.innerHTML = `
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <div class="version-name">${isLatest ? '⭐ Latest' : branch}</div>
@@ -479,7 +490,6 @@
                     `;
                 }).join('');
 
-                // Add click handlers
                 grid.querySelectorAll('.download-card').forEach(card => {
                     card.addEventListener('click', () => downloadPack(card.dataset.branch, card));
                 });
