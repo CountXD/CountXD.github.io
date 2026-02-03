@@ -646,14 +646,6 @@
     </div>
 
     <main>
-        <!-- Featured Project Section -->
-        <section class="featured-section" id="featured-section" style="display: none;">
-            <div class="section-title">⭐ Featured Project</div>
-            <div class="featured-card" id="featured-card">
-                <!-- Populated by JavaScript -->
-            </div>
-        </section>
-
         <!-- All Repos Section -->
         <section class="repos-section">
             <div class="section-title">📦 All Repositories</div>
@@ -672,7 +664,12 @@
 
     <script>
         const GITHUB_USERNAME = 'CountXD';
-        const FEATURED_REPO = 'texture-pack-downloader';
+
+        // Repos to exclude from the dashboard
+        const EXCLUDED_REPOS = [
+            'CountXD.github.io',
+            'texture-pack-downloader'
+        ];
 
         // Repos that have dedicated sub-pages
         const SUBPAGE_REPOS = [
@@ -901,25 +898,19 @@
 
                 const repos = await response.json();
 
-                // Update stats
-                const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
-                const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
+                // Filter out excluded repos
+                const filteredRepos = repos.filter(r => !EXCLUDED_REPOS.includes(r.name));
 
-                document.getElementById('total-repos').textContent = repos.length;
+                // Update stats
+                const totalStars = filteredRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+                const totalForks = filteredRepos.reduce((sum, repo) => sum + repo.forks_count, 0);
+
+                document.getElementById('total-repos').textContent = filteredRepos.length;
                 document.getElementById('total-stars').textContent = totalStars;
                 document.getElementById('total-forks').textContent = totalForks;
 
-                // Find featured repo
-                const featuredRepo = repos.find(r => r.name.toLowerCase() === FEATURED_REPO.toLowerCase());
-                if (featuredRepo) {
-                    renderFeatured(featuredRepo);
-                }
-
-                // Filter out featured repo from grid
-                const otherRepos = repos.filter(r => r.name.toLowerCase() !== FEATURED_REPO.toLowerCase());
-
                 // Render all repos
-                if (otherRepos.length === 0) {
+                if (filteredRepos.length === 0) {
                     grid.innerHTML = `
                         <div class="error">
                             <div class="error-icon">📭</div>
@@ -927,7 +918,7 @@
                         </div>
                     `;
                 } else {
-                    grid.innerHTML = otherRepos.map(renderRepoCard).join('');
+                    grid.innerHTML = filteredRepos.map(renderRepoCard).join('');
                 }
 
                 // Setup filters after rendering
