@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CountXD Dashboard - Central hub for Minecraft projects, home lab tools, and developer resources">
+    <meta name="description"
+        content="CountXD Dashboard - Central hub for Minecraft projects, home lab tools, and developer resources">
     <title>CountXD | Dashboard Hub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -65,16 +67,29 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-                        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+                radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
             animation: bgPulse 20s ease-in-out infinite;
         }
 
         @keyframes bgPulse {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-2%, 2%) rotate(1deg); }
-            50% { transform: translate(2%, -2%) rotate(-1deg); }
-            75% { transform: translate(-1%, -1%) rotate(0.5deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(-2%, 2%) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(2%, -2%) rotate(-1deg);
+            }
+
+            75% {
+                transform: translate(-1%, -1%) rotate(0.5deg);
+            }
         }
 
         /* Header */
@@ -106,8 +121,15 @@
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         h1 {
@@ -448,9 +470,23 @@
             font-weight: 500;
         }
 
-        .tag.minecraft { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
-        .tag.tool { background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
-        .tag.home-lab { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); color: var(--accent-orange); }
+        .tag.minecraft {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+        }
+
+        .tag.tool {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .tag.home-lab {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: var(--accent-orange);
+        }
 
         .repo-footer {
             display: flex;
@@ -503,7 +539,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loading-text {
@@ -573,6 +611,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="bg-animation"></div>
 
@@ -634,7 +673,16 @@
     <script>
         const GITHUB_USERNAME = 'CountXD';
         const FEATURED_REPO = 'texture-pack-downloader';
-        
+
+        // Repos that have dedicated sub-pages
+        const SUBPAGE_REPOS = [
+            'enchant-icons',
+            'enchant-icons-colorless',
+            'cassette-music-discs',
+            'square-music-discs',
+            'my-minimal-armor'
+        ];
+
         // Language colors for GitHub
         const languageColors = {
             'JavaScript': '#f1e05a',
@@ -662,9 +710,9 @@
             const tags = [];
 
             // Minecraft related
-            if (topics.includes('minecraft') || 
-                nameLC.includes('minecraft') || 
-                nameLC.includes('texture') || 
+            if (topics.includes('minecraft') ||
+                nameLC.includes('minecraft') ||
+                nameLC.includes('texture') ||
                 nameLC.includes('resource-pack') ||
                 nameLC.includes('enchant') ||
                 descLC.includes('minecraft')) {
@@ -672,8 +720,8 @@
             }
 
             // Tools
-            if (topics.includes('tool') || 
-                topics.includes('utility') || 
+            if (topics.includes('tool') ||
+                topics.includes('utility') ||
                 nameLC.includes('downloader') ||
                 nameLC.includes('script') ||
                 topics.includes('automation')) {
@@ -681,8 +729,8 @@
             }
 
             // Home Lab
-            if (topics.includes('homelab') || 
-                topics.includes('kubernetes') || 
+            if (topics.includes('homelab') ||
+                topics.includes('kubernetes') ||
                 topics.includes('docker') ||
                 topics.includes('self-hosted') ||
                 nameLC.includes('k8s') ||
@@ -699,7 +747,7 @@
             const date = new Date(dateString);
             const now = new Date();
             const seconds = Math.floor((now - date) / 1000);
-            
+
             const intervals = {
                 year: 31536000,
                 month: 2592000,
@@ -723,9 +771,9 @@
             const tags = classifyRepo(repo);
             const section = document.getElementById('featured-section');
             const card = document.getElementById('featured-card');
-            
+
             section.style.display = 'block';
-            
+
             card.innerHTML = `
                 <div class="featured-badge">🔥 Featured Project</div>
                 <h2 class="featured-title">${repo.name}</h2>
@@ -772,7 +820,9 @@
         function renderRepoCard(repo) {
             const tags = classifyRepo(repo);
             const tagClasses = tags.join(' ');
-            
+            const hasSubpage = SUBPAGE_REPOS.includes(repo.name);
+            const subpageUrl = hasSubpage ? `/${repo.name}/` : null;
+
             return `
                 <div class="repo-card" data-tags="${tagClasses}">
                     <div class="repo-header">
@@ -791,6 +841,12 @@
                     <div class="repo-tags">
                         ${tags.map(tag => `<span class="tag ${tag}">${tag.replace('-', ' ')}</span>`).join('')}
                     </div>
+                    ${hasSubpage ? `
+                    <a href="${subpageUrl}" class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:1rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        View Downloads
+                    </a>
+                    ` : ''}
                     <div class="repo-footer">
                         <div class="repo-stats">
                             <div class="repo-stat">
@@ -835,10 +891,10 @@
         // Main fetch function
         async function fetchRepos() {
             const grid = document.getElementById('repos-grid');
-            
+
             try {
                 const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch repositories');
                 }
@@ -848,7 +904,7 @@
                 // Update stats
                 const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
                 const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
-                
+
                 document.getElementById('total-repos').textContent = repos.length;
                 document.getElementById('total-stars').textContent = totalStars;
                 document.getElementById('total-forks').textContent = totalForks;
@@ -893,4 +949,5 @@
         document.addEventListener('DOMContentLoaded', fetchRepos);
     </script>
 </body>
+
 </html>
