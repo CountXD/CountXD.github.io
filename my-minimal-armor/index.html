@@ -154,13 +154,6 @@
             height: 18px
         }
 
-        .external-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap
-        }
-
         .btn {
             display: inline-flex;
             align-items: center;
@@ -197,6 +190,12 @@
             background: rgba(245, 158, 11, 0.1)
         }
 
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important
+        }
+
         main {
             max-width: 1200px;
             margin: 0 auto;
@@ -220,9 +219,57 @@
             border-radius: 2px
         }
 
+        .download-controls {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center
+        }
+
+        .suffix-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit
+        }
+
+        .suffix-input:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .suffix-input::placeholder {
+            color: var(--muted)
+        }
+
+        .selected-count {
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .select-actions {
+            display: flex;
+            gap: 0.5rem
+        }
+
+        .select-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem
+        }
+
         .downloads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 1rem
         }
 
@@ -230,11 +277,12 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 1.25rem;
+            padding: 1rem;
             text-align: center;
             transition: all 0.3s;
             backdrop-filter: blur(10px);
-            cursor: pointer
+            cursor: pointer;
+            position: relative
         }
 
         .download-card:hover {
@@ -243,21 +291,62 @@
             box-shadow: 0 0 40px rgba(245, 158, 11, 0.15)
         }
 
+        .download-card.selected {
+            border-color: var(--accent);
+            background: rgba(245, 158, 11, 0.15)
+        }
+
         .download-card.latest {
             border-color: var(--green);
             background: rgba(16, 185, 129, 0.1)
         }
 
-        .download-card.downloading {
-            opacity: 0.7;
-            pointer-events: none
+        .download-card.latest.selected {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.2)
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s
+        }
+
+        .download-card.selected .card-checkbox {
+            background: var(--accent);
+            border-color: var(--accent)
+        }
+
+        .download-card.latest.selected .card-checkbox {
+            background: var(--green);
+            border-color: var(--green)
+        }
+
+        .card-checkbox svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0;
+            color: #fff
+        }
+
+        .download-card.selected .card-checkbox svg {
+            opacity: 1
         }
 
         .version-name {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--text);
-            margin-bottom: 0.5rem
+            margin-bottom: 0.25rem;
+            margin-top: 0.5rem
         }
 
         .download-card.latest .version-name {
@@ -265,19 +354,8 @@
         }
 
         .download-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--muted)
-        }
-
-        .download-card svg {
-            width: 24px;
-            height: 24px;
-            color: var(--accent);
-            margin-bottom: 0.75rem
-        }
-
-        .download-card.latest svg {
-            color: var(--green)
         }
 
         .loading {
@@ -288,26 +366,35 @@
             gap: 1.5rem
         }
 
-        .loading-spinner,
-        .download-card .spinner {
-            width: 24px;
-            height: 24px;
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
             border: 3px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 0.75rem
-        }
-
-        .loading .loading-spinner {
-            width: 48px;
-            height: 48px
+            animation: spin 1s linear infinite
         }
 
         @keyframes spin {
             to {
                 transform: rotate(360deg)
             }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s;
+            width: 0
         }
 
         footer {
@@ -324,11 +411,19 @@
 
         @media(max-width:768px) {
             .downloads-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr))
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))
             }
 
             .nav-links {
                 display: none
+            }
+
+            .download-controls {
+                flex-direction: column
+            }
+
+            .suffix-input {
+                width: 100%
             }
         }
     </style>
@@ -361,6 +456,22 @@
     </header>
     <main>
         <h2 class="section-title">📥 Download for Your Minecraft Version</h2>
+        <div class="download-controls" id="controls" style="display:none">
+            <input type="text" class="suffix-input" id="suffix" placeholder="Custom suffix (e.g., -modpack)">
+            <span class="selected-count"><span id="count">0</span> selected</span>
+            <div class="select-actions">
+                <button class="btn btn-secondary" onclick="selectAll()">Select All</button>
+                <button class="btn btn-secondary" onclick="selectNone()">Clear</button>
+            </div>
+            <button class="btn btn-primary" id="downloadBtn" onclick="downloadSelected()" disabled>Download
+                Selected</button>
+        </div>
+        <div id="progress-container" style="display:none">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <p style="text-align:center;margin-top:0.5rem;color:var(--muted)" id="progress-text">Preparing...</p>
+        </div>
         <div class="downloads-grid" id="downloads-grid">
             <div class="loading">
                 <div class="loading-spinner"></div>
@@ -375,6 +486,7 @@
         const REPO = 'my-minimal-armor';
         const USER = 'CountXD';
         const EXCLUDE_FILES = ['README.md', 'readme.md', '.gitattributes', 'LICENSE', 'license', '.gitignore'];
+        let selectedBranches = new Set();
 
         function sortVersions(branches) {
             return branches.sort((a, b) => {
@@ -386,42 +498,75 @@
             });
         }
 
+        function updateSelection() {
+            document.getElementById('count').textContent = selectedBranches.size;
+            document.getElementById('downloadBtn').disabled = selectedBranches.size === 0;
+        }
+
+        function toggleCard(branch, card) {
+            if (selectedBranches.has(branch)) { selectedBranches.delete(branch); card.classList.remove('selected'); }
+            else { selectedBranches.add(branch); card.classList.add('selected'); }
+            updateSelection();
+        }
+
+        function selectAll() {
+            document.querySelectorAll('.download-card').forEach(card => { selectedBranches.add(card.dataset.branch); card.classList.add('selected'); });
+            updateSelection();
+        }
+
+        function selectNone() {
+            selectedBranches.clear();
+            document.querySelectorAll('.download-card').forEach(card => card.classList.remove('selected'));
+            updateSelection();
+        }
+
         async function getTreeFiles(branch) {
             const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/trees/${branch}?recursive=1`);
-            if (!res.ok) throw new Error('Failed to get tree');
+            if (!res.ok) throw new Error('Failed');
             return (await res.json()).tree.filter(item => item.type === 'blob');
         }
 
         async function fetchFileContent(branch, path) {
             const res = await fetch(`https://raw.githubusercontent.com/${USER}/${REPO}/${branch}/${path}`);
-            if (!res.ok) throw new Error(`Failed to fetch ${path}`);
+            if (!res.ok) throw new Error('Failed');
             return await res.blob();
         }
 
-        async function downloadPack(branch, card) {
-            card.classList.add('downloading');
-            const isLatest = branch === 'latest';
-            card.innerHTML = `<div class="spinner"></div><div class="version-name">${isLatest ? '⭐ Latest' : branch}</div><div class="download-label">Preparing...</div>`;
-            try {
-                const files = await getTreeFiles(branch);
-                const zip = new JSZip();
-                const validFiles = files.filter(f => !EXCLUDE_FILES.includes(f.path.split('/').pop()));
-                card.querySelector('.download-label').textContent = `Downloading ${validFiles.length} files...`;
-                const batchSize = 10;
-                for (let i = 0; i < validFiles.length; i += batchSize) {
-                    const batch = validFiles.slice(i, i + batchSize);
-                    const contents = await Promise.all(batch.map(f => fetchFileContent(branch, f.path)));
-                    batch.forEach((f, idx) => zip.file(f.path, contents[idx]));
-                }
-                card.querySelector('.download-label').textContent = 'Creating ZIP...';
-                const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); a.href = url; a.download = `${REPO}-${branch}.zip`;
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } catch (e) { console.error(e); alert('Download failed. Try GitHub directly.'); }
-            card.classList.remove('downloading');
-            card.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="version-name">${isLatest ? '⭐ Latest' : branch}</div><div class="download-label">Download ZIP</div>`;
+        async function downloadPack(branch, suffix = '') {
+            const files = await getTreeFiles(branch);
+            const zip = new JSZip();
+            const validFiles = files.filter(f => !EXCLUDE_FILES.includes(f.path.split('/').pop()));
+            const batchSize = 10;
+            for (let i = 0; i < validFiles.length; i += batchSize) {
+                const batch = validFiles.slice(i, i + batchSize);
+                const contents = await Promise.all(batch.map(f => fetchFileContent(branch, f.path)));
+                batch.forEach((f, idx) => zip.file(f.path, contents[idx]));
+            }
+            const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `${REPO}-${branch}${suffix}.zip`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        async function downloadSelected() {
+            if (selectedBranches.size === 0) return;
+            const suffix = document.getElementById('suffix').value.trim();
+            const branches = Array.from(selectedBranches);
+            const progressContainer = document.getElementById('progress-container');
+            const progress = document.getElementById('progress');
+            const progressText = document.getElementById('progress-text');
+            document.getElementById('downloadBtn').disabled = true;
+            progressContainer.style.display = 'block';
+            for (let i = 0; i < branches.length; i++) {
+                progressText.textContent = `Downloading ${branches[i]}... (${i + 1}/${branches.length})`;
+                progress.style.width = `${(i / branches.length) * 100}%`;
+                try { await downloadPack(branches[i], suffix); if (i < branches.length - 1) await new Promise(r => setTimeout(r, 500)); }
+                catch (e) { console.error(e); }
+                progress.style.width = `${((i + 1) / branches.length) * 100}%`;
+            }
+            progressText.textContent = 'All downloads complete!';
+            setTimeout(() => { progressContainer.style.display = 'none'; progress.style.width = '0'; document.getElementById('downloadBtn').disabled = false; }, 2000);
         }
 
         async function loadData() {
@@ -431,8 +576,9 @@
                 const repo = await repoRes.json(), branches = await branchesRes.json();
                 document.getElementById('stars').textContent = repo.stargazers_count;
                 document.getElementById('forks').textContent = repo.forks_count;
-                grid.innerHTML = sortVersions(branches).map(b => `<div class="download-card ${b.name === 'latest' ? 'latest' : ''}" data-branch="${b.name}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div class="version-name">${b.name === 'latest' ? '⭐ Latest' : b.name}</div><div class="download-label">Download ZIP</div></div>`).join('');
-                grid.querySelectorAll('.download-card').forEach(card => card.addEventListener('click', () => downloadPack(card.dataset.branch, card)));
+                document.getElementById('controls').style.display = 'flex';
+                grid.innerHTML = sortVersions(branches).map(b => `<div class="download-card ${b.name === 'latest' ? 'latest' : ''}" data-branch="${b.name}"><div class="card-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="version-name">${b.name === 'latest' ? '⭐ Latest' : b.name}</div><div class="download-label">Click to select</div></div>`).join('');
+                grid.querySelectorAll('.download-card').forEach(card => card.addEventListener('click', () => toggleCard(card.dataset.branch, card)));
             } catch (e) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted)">Unable to load.</div>'; }
         }
         document.addEventListener('DOMContentLoaded', loadData);
