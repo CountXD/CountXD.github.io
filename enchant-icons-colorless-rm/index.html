@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enchant Icons Colorless | CountXD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card: rgba(25, 25, 35, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #f0f0f5;
+            --muted: #606070;
+            --accent: #6b7280;
+            --green: #10b981
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(107, 114, 128, 0.08) 0%, transparent 50%);
+            animation: bgPulse 20s ease-in-out infinite
+        }
+
+        @keyframes bgPulse {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(2%, -2%)
+            }
+        }
+
+        nav {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #a0a0b0;
+            text-decoration: none
+        }
+
+        .nav-back:hover {
+            color: var(--accent)
+        }
+
+        .nav-back svg {
+            width: 18px;
+            height: 18px
+        }
+
+        .nav-links a {
+            color: #a0a0b0;
+            text-decoration: none;
+            margin-left: 1.5rem
+        }
+
+        .nav-links a:hover {
+            color: var(--accent)
+        }
+
+        header {
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto
+        }
+
+        .pack-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 0 40px rgba(107, 114, 128, 0.15);
+            object-fit: contain;
+            display: block;
+            background: rgba(25, 25, 35, 0.6);
+            image-rendering: pixelated;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #a0a0b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem
+        }
+
+        .description {
+            color: #a0a0b0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted)
+        }
+
+        .meta-item svg {
+            width: 18px;
+            height: 18px
+        }
+
+        .external-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6b7280, #374151);
+            color: #fff
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px)
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(107, 114, 128, 0.1)
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, #6b7280, #374151);
+            border-radius: 2px
+        }
+
+        .download-controls {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center
+        }
+
+        .suffix-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit
+        }
+
+        .suffix-input:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .suffix-input::placeholder {
+            color: var(--muted)
+        }
+
+        .selected-count {
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        .select-actions {
+            display: flex;
+            gap: 0.5rem
+        }
+
+        .select-actions button {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem
+        }
+
+        .download-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            position: relative
+        }
+
+        .download-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(107, 114, 128, 0.3);
+            box-shadow: 0 0 40px rgba(107, 114, 128, 0.15)
+        }
+
+        .download-card.selected {
+            border-color: var(--accent);
+            background: rgba(107, 114, 128, 0.15)
+        }
+
+        .download-card.latest {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.1)
+        }
+
+        .download-card.latest.selected {
+            border-color: var(--green);
+            background: rgba(16, 185, 129, 0.2)
+        }
+
+        .card-checkbox {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s
+        }
+
+        .download-card.selected .card-checkbox {
+            background: var(--accent);
+            border-color: var(--accent)
+        }
+
+        .download-card.latest.selected .card-checkbox {
+            background: var(--green);
+            border-color: var(--green)
+        }
+
+        .card-checkbox svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0;
+            color: #fff
+        }
+
+        .download-card.selected .card-checkbox svg {
+            opacity: 1
+        }
+
+        .version-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+            margin-top: 0.5rem
+        }
+
+        .download-card.latest .version-name {
+            color: var(--green)
+        }
+
+        .download-label {
+            font-size: 0.75rem;
+            color: var(--muted)
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem;
+            gap: 1.5rem
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 1rem
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s;
+            width: 0
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted)
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none
+        }
+
+        @media(max-width:768px) {
+            .downloads-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .download-controls {
+                flex-direction: column
+            }
+
+            .suffix-input {
+                width: 100%
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-animation"></div>
+    <nav>
+        <a href="../" class="nav-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>Back to Dashboard</a>
+        <div class="nav-links">
+            <a href="https://github.com/CountXD/enchant-icons-colorless" target="_blank">GitHub</a>
+            <a href="https://modrinth.com/resourcepack/enchant-icons-colorless-countxd" target="_blank">Modrinth</a>
+        </div>
+    </nav>
+    <header>
+        <img src="assets/pack.png" alt="Enchant Icons Colorless" class="pack-icon">
+        <h1>Enchant Icons Colorless</h1>
+        <p class="description">A minimalist variant of Enchant Icons with monochrome/colorless icons. Perfect for
+            players who prefer a cleaner aesthetic.</p>
+        <div class="meta-info">
+            <div class="meta-item"><svg viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z" />
+                </svg><span id="stars">-</span> stars</div>
+            <div class="meta-item"><svg viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                        d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z" />
+                </svg><span id="forks">-</span> forks</div>
+        </div>
+        <div class="external-links">
+            <a href="https://modrinth.com/resourcepack/enchant-icons-colorless-countxd" target="_blank"
+                class="btn btn-primary">View on Modrinth</a>
+            <a href="https://github.com/CountXD/enchant-icons-colorless" target="_blank" class="btn btn-secondary">View
+                on GitHub</a>
+        </div>
+    </header>
+    <main>
+        <h2 class="section-title">📥 Download for Your Minecraft Version</h2>
+        <div class="download-controls" id="controls" style="display:none">
+            <input type="text" class="suffix-input" id="suffix" placeholder="Custom suffix (e.g., -modpack)">
+            <span class="selected-count"><span id="count">0</span> selected</span>
+            <div class="select-actions">
+                <button class="btn btn-secondary" onclick="selectAll()">Select All</button>
+                <button class="btn btn-secondary" onclick="selectNone()">Clear</button>
+            </div>
+            <button class="btn btn-primary" id="downloadBtn" onclick="downloadSelected()" disabled>Download
+                Selected</button>
+        </div>
+        <div id="progress-container" style="display:none">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <p style="text-align:center;margin-top:0.5rem;color:var(--muted)" id="progress-text">Preparing...</p>
+        </div>
+        <div class="downloads-grid" id="downloads-grid">
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <div>Loading versions...</div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Made with ❤️ by <a href="https://github.com/CountXD" target="_blank">CountXD</a></p>
+    </footer>
+    <script>
+        const REPO = 'enchant-icons-colorless';
+        const USER = 'CountXD';
+        const EXCLUDE_FILES = ['README.md', 'readme.md', '.gitattributes', 'LICENSE', 'license', '.gitignore'];
+        let selectedBranches = new Set();
+
+        function sortVersions(branches) {
+            return branches.sort((a, b) => {
+                if (a.name === 'latest') return -1;
+                if (b.name === 'latest') return 1;
+                const getVer = n => { const m = n.match(/^(\d+)\.(\d+)(?:\.(\d+))?/); return m ? [+m[1], +m[2], +(m[3] || 0)] : [0, 0, 0]; };
+                const [aM, am, ap] = getVer(a.name), [bM, bm, bp] = getVer(b.name);
+                return bM !== aM ? bM - aM : bm !== am ? bm - am : bp - ap;
+            });
+        }
+
+        function updateSelection() {
+            document.getElementById('count').textContent = selectedBranches.size;
+            document.getElementById('downloadBtn').disabled = selectedBranches.size === 0;
+        }
+
+        function toggleCard(branch, card) {
+            if (selectedBranches.has(branch)) { selectedBranches.delete(branch); card.classList.remove('selected'); }
+            else { selectedBranches.add(branch); card.classList.add('selected'); }
+            updateSelection();
+        }
+
+        function selectAll() {
+            document.querySelectorAll('.download-card').forEach(card => { selectedBranches.add(card.dataset.branch); card.classList.add('selected'); });
+            updateSelection();
+        }
+
+        function selectNone() {
+            selectedBranches.clear();
+            document.querySelectorAll('.download-card').forEach(card => card.classList.remove('selected'));
+            updateSelection();
+        }
+
+        async function getTreeFiles(branch) {
+            const res = await fetch(`https://api.github.com/repos/${USER}/${REPO}/git/trees/${branch}?recursive=1`);
+            if (!res.ok) throw new Error('Failed');
+            return (await res.json()).tree.filter(item => item.type === 'blob');
+        }
+
+        async function fetchFileContent(branch, path) {
+            const res = await fetch(`https://raw.githubusercontent.com/${USER}/${REPO}/${branch}/${path}`);
+            if (!res.ok) throw new Error('Failed');
+            return await res.blob();
+        }
+
+        async function downloadPack(branch, suffix = '') {
+            const files = await getTreeFiles(branch);
+            const zip = new JSZip();
+            const validFiles = files.filter(f => !EXCLUDE_FILES.includes(f.path.split('/').pop()));
+            const batchSize = 10;
+            for (let i = 0; i < validFiles.length; i += batchSize) {
+                const batch = validFiles.slice(i, i + batchSize);
+                const contents = await Promise.all(batch.map(f => fetchFileContent(branch, f.path)));
+                batch.forEach((f, idx) => zip.file(f.path, contents[idx]));
+            }
+            const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `${REPO}-${branch}${suffix}.zip`;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        async function downloadSelected() {
+            if (selectedBranches.size === 0) return;
+            const suffix = document.getElementById('suffix').value.trim();
+            const branches = Array.from(selectedBranches);
+            const progressContainer = document.getElementById('progress-container');
+            const progress = document.getElementById('progress');
+            const progressText = document.getElementById('progress-text');
+            document.getElementById('downloadBtn').disabled = true;
+            progressContainer.style.display = 'block';
+            for (let i = 0; i < branches.length; i++) {
+                progressText.textContent = `Downloading ${branches[i]}... (${i + 1}/${branches.length})`;
+                progress.style.width = `${(i / branches.length) * 100}%`;
+                try { await downloadPack(branches[i], suffix); if (i < branches.length - 1) await new Promise(r => setTimeout(r, 500)); }
+                catch (e) { console.error(e); }
+                progress.style.width = `${((i + 1) / branches.length) * 100}%`;
+            }
+            progressText.textContent = 'All downloads complete!';
+            setTimeout(() => { progressContainer.style.display = 'none'; progress.style.width = '0'; document.getElementById('downloadBtn').disabled = false; }, 2000);
+        }
+
+        async function loadData() {
+            const grid = document.getElementById('downloads-grid');
+            try {
+                const [repoRes, branchesRes] = await Promise.all([fetch(`https://api.github.com/repos/${USER}/${REPO}`), fetch(`https://api.github.com/repos/${USER}/${REPO}/branches`)]);
+                const repo = await repoRes.json(), branches = await branchesRes.json();
+                document.getElementById('stars').textContent = repo.stargazers_count;
+                document.getElementById('forks').textContent = repo.forks_count;
+                document.getElementById('controls').style.display = 'flex';
+                grid.innerHTML = sortVersions(branches).map(b => `<div class="download-card ${b.name === 'latest' ? 'latest' : ''}" data-branch="${b.name}"><div class="card-checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><div class="version-name">${b.name === 'latest' ? '⭐ Latest' : b.name}</div><div class="download-label">Click to select</div></div>`).join('');
+                grid.querySelectorAll('.download-card').forEach(card => card.addEventListener('click', () => toggleCard(card.dataset.branch, card)));
+            } catch (e) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted)">Unable to load.</div>'; }
+        }
+        document.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+
+</html>
